@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 扫描com.yu.pojo包下的类 -->
+    <context:component-scan base-package="com.yu.pojo"/>
+        <context:annotation-config/>
+
+    <bean id="dog" class="com.yu.dao.Dog">
+        <property name="name" value="小狗"/>
+    </bean>
+    <bean id="dog1" class="com.yu.dao.Dog">
+        <property name="name" value="小狗1"/>
+    </bean>
+    <bean id="cat" class="com.yu.dao.cat">
+        <property name="name" value="小猫"/>
+    </bean>
+    <bean id="cat1" class="com.yu.dao.cat">
+        <property name="name" value="小猫1"/>
+    </bean>
+    <!-- scope 模式为单例 -->
+    <bean id="people" class="com.yu.dao.People" scope="prototype">
+        <property name="name" value="张三"/>
+    </bean>
+</beans>

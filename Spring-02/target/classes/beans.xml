@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 使用p注入要导入xml约束和配置文件相同还有构造注入c -->
+    <bean id="address" class="yu.com.dao.Address" p:name="成都" />
+    <bean id="student" class="yu.com.dao.Student">
+        <!-- 普通注入 -->
+        <property name="name" value="张三"/>
+        <!-- map注入 -->
+        <property name="information">
+            <map>
+                <entry key="职业" value="学生"/>
+                <entry key="年龄" value="19"/>
+                <entry key="爱好" value="看片"/>
+            </map>
+        </property>
+        <!-- 数组注入 -->
+        <property name="hobby">
+            <array>
+                <value>吃饭</value>
+                <value>睡觉</value>
+                <value>打豆豆</value>
+            </array>
+        </property>
+        <!-- null值注入 -->
+        <property name="wife">
+            <null/>
+        </property>
+        <!-- 集合注入 -->
+        <property name="loveBook">
+            <list>
+                <value>三国演义</value>
+                <value>红楼梦</value>
+                <value>水浒传</value>
+                <value>西游记</value>
+            </list>
+        </property>
+        <!-- 配置文件注入 一般用来注入mysql的配置文件 -->
+        <property name="pro">
+            <props>
+                <prop key="url">jdbc:mysql:\\\localhost:3306</prop>
+                <prop key="userName">root</prop>
+                <prop key="Password">123456</prop>
+            </props>
+        </property>
+        <!-- bean注入 引用在bean中创建的对象 -->
+        <property name="address" ref="address"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--bean中的常用配置
+    id：bean中的唯一标识 相当于创建对象的对象名
+    class：对象所引用的全限定名 包名+类型
+    name：name 属性也是其别名的但是他可以起多个别名，空格；都能分割别名
+-->
+<!-- 默认走的是无参构造方法 -->
+<bean id="user" class="UserDao.UserDaoimpl"></bean>
+<!--  有参构造方法的三种实现 -->
+<bean id="userT" class="UserDao.userT" name="u2 u3">
+    <!--  通过index注入 -->
+    <constructor-arg index="0" value="张三"/>
+    <!--  通过构造方法的参数名注入 -->
+    <constructor-arg name="password" value="123456"/>
+    <!--  通过参数类型注入如果两个参数类型相同就会出问题 所以不推荐使用 -->
+    <!--   <constructor-arg type="java.lang.String" value="张三"/>  -->
+</bean>
+<!-- 给创建出来的ben起别名 -->
+<alias name="user" alias="u1"/>
+<!-- import是引用其他的配置文件可以引用多个 -->
+<!-- <import resource="bens2.xml"/> -->
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--导入外部配置文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--创建数据源 这使用的是阿里的Druid数据库连接池 可以使用其他的数据源的-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+     </bean>
+    <!--创建sqlSessionFactory对象 sqlSessionFactory对象能配置mybatis核心配置文件的所有东西导入合并配置文件·别名·注册mapper -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- sqlSessionFactory必须配置的一个属性就是DataSource 这引用上面配置好的数据源 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 无缝衔接mybatis的配置文件两个配置文件可以配合使用 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 注册mapper -->
+        <property name="mapperLocations" value="com/yu/mapper/*.xml"/>
+    </bean>
+    <!-- 创建sqlSession对象 因为是在spring中得创建SqlSessionTemplate，这二者没有区别是一样的用法 -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <!-- 因为SqlSessionTemplate没有set方法就只能构造方法注入sqlSessionFactory -->
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+    <bean id="user" class="com.yu.mapper.userMapperImpl">
+        <property name="sqlSession" ref="sqlSession"/>
+    </bean>
+
+</beans>

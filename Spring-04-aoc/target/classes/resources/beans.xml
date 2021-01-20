@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean id="before" class="com.yu.log.BeforeLog"/>
+    <bean id="alter" class="com.yu.log.AfterLog"/>
+    <bean id="service" class="com.yu.service.userApiImpl"/>
+    <bean id="diy" class="com.yu.diy.diyPointcut"/>
+       <!-- 第一种实现Spring接口的方式
+        <aop:config>
+          &lt;!&ndash;  配置切入点  execution表达式： （） &ndash;&gt;
+            <aop:pointcut id="pointcut" expression="execution(* com.yu.service.userApiImpl.*(..))"/>
+            <aop:advisor advice-ref="alter" pointcut-ref="pointcut"/>
+            <aop:advisor advice-ref="before" pointcut-ref="pointcut"/>
+        </aop:config>-->
+        <!-- 第二种自定义切面实现代理 -->
+    <!--<aop:config>
+        &lt;!&ndash; ref引用的是自定义类 &ndash;&gt;
+        <aop:aspect ref="diy">
+            &lt;!&ndash;切入点&ndash;&gt;
+            <aop:pointcut id="pointcut" expression="execution(* com.yu.service.userApiImpl.*(..))"/>
+            &lt;!&ndash;通知&ndash;&gt;
+            &lt;!&ndash; 在方法执行前切入 &ndash;&gt;
+            <aop:before method="before" pointcut-ref="pointcut"/>
+            &lt;!&ndash; 在方法执行后切入 &ndash;&gt;
+            <aop:after method="after" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>-->
+    <!--第三种-->
+    <bean id="diyAOP" class="com.yu.diy.DiyAOP"/>
+    <!-- 开启注解支持 expose-proxy="true"可以不写 如果不写就是默认为false为JDK的代理方式 true为cglib的代理方式 -->
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+</beans>

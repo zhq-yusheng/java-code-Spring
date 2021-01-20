@@ -1,0 +1,6 @@
+driverClassName=com.mysql.jdbc.Driver
+url=jdbc:mysql:///db2
+username=root
+password=root
+initialSize=8
+maxWait=3000
